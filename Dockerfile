@@ -53,9 +53,8 @@ RUN curl -s $SDKS_URL/$MRSID_NAME.tar.gz | tar xz -C /usr/local/src \
     && cp $MRSID_DIR/Lidar_DSDK/lib/liblti_lidar_dsdk.so* /usr/lib
 
 #update lt_platform.h to work with gcc version 5
-RUN  sed -i "s|#if (defined(__GNUC__) || defined(__GNUG__)) && (3 <= __GNUC__ && __GNUC__ <= 5)|#if (defined(__GNUC__) || defined(__GNUG__)) && (3 <= __GNUC__) |g" \
+RUN  sed -i 's/(3 <= __GNUC__ && __GNUC__ <= 5)/(3 <= __GNUC__)/g' \
     /usr/local/src/$MRSID_NAME/Raster_DSDK/include/lt_platform.h
-#COPY lt_platform.h /usr/local/src/$MRSID_NAME/Raster_DSDK/include
 
 RUN mkdir -p /usr/local/src && \
     curl -s http://download.osgeo.org/gdal/$GDAL_VERSION/gdal-$GDAL_VERSION.tar.gz | tar xz -C /usr/local/src
